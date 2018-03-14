@@ -4,7 +4,7 @@ Fun project to utilize awesome [';--have i been pwned?](https://haveibeenpwned.c
 
 Usage is simple:
 
-	password <password>
+	./pwned <password>
 
 It'll print ***Your password is well known!*** if your password is in ';--have i been pwned? DB. Enjoy!
 
