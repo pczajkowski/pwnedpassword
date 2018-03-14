@@ -34,17 +34,17 @@ char *getSuffixUppercase(char *hash) {
 int findSuffix(char *suffix, char *data) {
 	int found = 0;
 	int check = 1;
-	
+
 	int suffixCount = 0;
 	for(unsigned long i = 0; i < strlen(data); i++) {
 		if (found) return found;
-		
+
 		if (check) {
 			if (data[i] == ':') found = 1;
 			if (suffix[suffixCount] != data[i]) check = 0;
 			suffixCount++;
 		}
-		
+
 		if (data[i] == '\n') {
 			check = 1;
 			suffixCount = 0;
@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
 
 	char *data = getData(url);
 	free(url);
-	
+
 	if (findSuffix(suffix, data)) puts("Your password is well known!");
 	free(data);
 	free(suffix);
