@@ -2,6 +2,10 @@
 
 // Borrowed from https://curl.haxx.se/libcurl/c/getinmemory.html
 
+struct MemoryStruct {                                                                                                                                     char *memory;
+	size_t size;
+};
+
 static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp) {
 	size_t realsize = size * nmemb;
 	struct MemoryStruct *mem = (struct MemoryStruct *)userp;
