@@ -1,6 +1,9 @@
 CFLAGS=-g -Wall -Wextra -O3 -std=gnu99
 LDLIBS=-lcurl -lssl -lcrypto
 objects=curl.o sha.o
+mingwCFLAGS=-g -Wall -Wextra -O3 -std=gnu99
+mingwLDLIBS=-lcurl -lssl -lcrypto
+mingw=x86_64-w64-mingw32-gcc
 
 pwned: $(objects)
 
@@ -9,3 +12,10 @@ clean:
 	rm *.o
 
 default: pwned
+
+win/pwned.exe:
+	$(mingw) $(mingwCFLAGS) -c curl.c $(mingwLDLIBS)
+	$(mingw) $(mingwCFLAGS) -c sha.c $(mingwLDLIBS)
+	$(mingw) $(mingwCFLAGS) pwned.c $(objects) $(mingwLDLIBS) -o $@
+
+win: win/pwned.exe
