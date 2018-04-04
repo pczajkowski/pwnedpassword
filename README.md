@@ -8,3 +8,5 @@ Usage is simple:
 
 It'll print ***Your password is well known!*** if your password is in ';--have i been pwned? DB. Enjoy!
 
+You can find Windows 64-bit binary and necessary libs in *win* subfolder.
+
