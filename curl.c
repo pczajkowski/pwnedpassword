@@ -50,6 +50,10 @@ char *getData(char *url) {
 	   field, so we provide one */ 
 	curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
 
+	#ifdef WIN32
+	curl_easy_setopt(curl_handle, CURLOPT_CAINFO, "cacert.pem");
+	#endif
+
 	/* get it! */ 
 	res = curl_easy_perform(curl_handle);
 
