@@ -22,7 +22,7 @@ char *getSuffixUppercase(char *hash) {
 	strncpy(hashSuffix, hash+HASH_PREFIX_SIZE, HASH_SUFFIX_SIZE);
 
 	char *suffixUpper = malloc(HASH_SUFFIX_SIZE + 1);
-	for(int i = 0; i < HASH_SUFFIX_SIZE; i++) {
+	for (int i = 0; i < HASH_SUFFIX_SIZE; i++) {
 		int c = hashSuffix[i];
 		if (islower(c)) c = toupper(c);
 		sprintf(suffixUpper+i, "%c", c);
@@ -36,11 +36,17 @@ int findSuffix(char *suffix, char *data) {
 	int check = 1;
 
 	int suffixCount = 0;
-	for(unsigned long i = 0; i < strlen(data); i++) {
-		if (found) return found;
+	for (unsigned long i = 0; i < strlen(data); i++) {
+		if (found) {
+			putchar(data[i]);
+			if (data[i] == '\n') return found;
+		}
 
 		if (check) {
-			if (data[i] == ':') found = 1;
+			if (data[i] == ':') {
+				puts("This is how many times your password was pwned:");
+				found = 1;
+			}
 			if (suffix[suffixCount] != data[i]) check = 0;
 			suffixCount++;
 		}
@@ -71,7 +77,8 @@ int main(int argc, char **argv) {
 	char *data = getData(url);
 	free(url);
 
-	if (findSuffix(suffix, data)) puts("Your password is well known!");
+	if (!findSuffix(suffix, data)) puts("Password not pwned!");
+	
 	free(data);
 	free(suffix);
 }
