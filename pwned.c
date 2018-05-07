@@ -38,13 +38,16 @@ int findSuffix(char *suffix, char *data) {
 	int suffixCount = 0;
 	for (unsigned long i = 0; i < strlen(data); i++) {
 		if (found) {
+			if (data[i] == '\n') {
+				putchar('\n');
+				return found;
+			}
 			putchar(data[i]);
-			if (data[i] == '\n') return found;
 		}
 
 		if (check) {
 			if (data[i] == ':') {
-				puts("This is how many times your password was pwned:");
+				printf("This is how many times your password was pwned: ");
 				found = 1;
 			}
 			if (suffix[suffixCount] != data[i]) check = 0;
