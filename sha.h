@@ -3,4 +3,4 @@
 #include <string.h>
 #include <openssl/sha.h>
 
-char *getHash(char *string);
+char *getHash(const char *string);

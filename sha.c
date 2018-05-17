@@ -1,6 +1,6 @@
 #include "sha.h"
 
-static unsigned char *generateHash(char *string, size_t length) {
+static unsigned char *generateHash(const char *string, size_t length) {
 	unsigned char *hash = malloc(SHA_DIGEST_LENGTH);
 	SHA1((unsigned char*)string, length, hash);
 
@@ -16,7 +16,7 @@ static char *hashToString(unsigned char *hash) {
 	return string;
 }
 
-char *getHash(char *string) {
+char *getHash(const char *string) {
 	size_t length = strlen(string);
 	unsigned char *hash = generateHash(string, length);
 	char *hashString = hashToString(hash);

@@ -8,7 +8,7 @@
 #define HASH_SUFFIX_SIZE 35
 #define URL_SIZE 43
 
-char *getURL(char* hash) {
+char *getURL(const char* hash) {
 	const char *baseURL = "https://api.pwnedpasswords.com/range/";
 	char *url = calloc(URL_SIZE, 1);
 	strncpy(url, baseURL, strlen(baseURL));
@@ -17,7 +17,7 @@ char *getURL(char* hash) {
 	return url;
 }
 
-char *getSuffixUppercase(char *hash) {
+char *getSuffixUppercase(const char *hash) {
 	char hashSuffix[HASH_SUFFIX_SIZE + 1];
 	strncpy(hashSuffix, hash+HASH_PREFIX_SIZE, HASH_SUFFIX_SIZE);
 
@@ -31,7 +31,7 @@ char *getSuffixUppercase(char *hash) {
 	return suffixUpper;
 }
 
-int findSuffix(char *suffix, char *data) {
+int findSuffix(const char *suffix, const char *data) {
 	int found = 0;
 	int check = 1;
 
@@ -62,7 +62,7 @@ int findSuffix(char *suffix, char *data) {
 	return found;
 }
 
-void usage(char *app) {
+void usage(const char *app) {
 	printf("Usage:\n%s <password>\n", app);
 }
 
