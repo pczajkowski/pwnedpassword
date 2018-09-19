@@ -32,29 +32,22 @@ char *getSuffixUppercase(const char *hash) {
 }
 
 void printNumber(const char *data) {
-	for (int i = 0; data[i] != 0 && data[i] != '\n'; i++)
+	for (int i = 0; data[i] != '\n'; i++)
 		putchar(data[i]);
 	putchar('\n');
 }
 
 int findSuffix(const char *suffix, const char *data) {
-	int check = 1;
-	int suffixCount = 0;
+	for (int i = 0; data[i] != 0; i++) {
+		int j;
+		for (j = 0; suffix[j] != 0; j++)
+			if (data[i+j] != suffix[j])
+				break;
 
-	for (unsigned long i = 0; i < strlen(data); i++) {
-		if (check) {
-			if (data[i] == ':') {
-				printf("This is how many times your password was pwned: ");
-				printNumber(data+i+1);
-				return 1;
-			}
-			if (suffix[suffixCount] != data[i]) check = 0;
-			suffixCount++;
-		}
-
-		if (data[i] == '\n') {
-			check = 1;
-			suffixCount = 0;
+		if (suffix[j] == 0 && data[i+j] == ':') {
+			printf("This is how many times your password was pwned: ");
+			printNumber(data+i+j+1);
+			return 1;
 		}
 	}
 	return 0;
