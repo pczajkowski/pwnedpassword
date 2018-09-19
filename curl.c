@@ -64,9 +64,8 @@ char *getData(char *url) {
 				curl_easy_strerror(res));
 	}
 
-	size_t dataSize = strlen(chunk.memory);
-	char *data = calloc(dataSize + 1, 1);
-	strncpy(data, chunk.memory, dataSize);  
+	char *data = malloc(chunk.size);
+	memcpy(data, chunk.memory, chunk.size);  
 
 	/* cleanup curl stuff */ 
 	curl_easy_cleanup(curl_handle);
