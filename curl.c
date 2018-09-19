@@ -64,16 +64,11 @@ char *getData(char *url) {
 				curl_easy_strerror(res));
 	}
 
-	char *data = malloc(chunk.size);
-	memcpy(data, chunk.memory, chunk.size);  
-
 	/* cleanup curl stuff */ 
 	curl_easy_cleanup(curl_handle);
-
-	free(chunk.memory);
 
 	/* we're done with libcurl, so clean it up */ 
 	curl_global_cleanup();
 
-	return data;
+	return chunk.memory;
 }
