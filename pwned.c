@@ -31,24 +31,22 @@ char *getSuffixUppercase(const char *hash) {
 	return suffixUpper;
 }
 
+void printNumber(const char *data) {
+	for (int i = 0; data[i] != 0 && data[i] != '\n'; i++)
+		putchar(data[i]);
+	putchar('\n');
+}
+
 int findSuffix(const char *suffix, const char *data) {
-	int found = 0;
 	int check = 1;
-
 	int suffixCount = 0;
-	for (unsigned long i = 0; i < strlen(data); i++) {
-		if (found) {
-			if (data[i] == '\n') {
-				putchar('\n');
-				return found;
-			}
-			putchar(data[i]);
-		}
 
+	for (unsigned long i = 0; i < strlen(data); i++) {
 		if (check) {
 			if (data[i] == ':') {
 				printf("This is how many times your password was pwned: ");
-				found = 1;
+				printNumber(data+i+1);
+				return 1;
 			}
 			if (suffix[suffixCount] != data[i]) check = 0;
 			suffixCount++;
@@ -59,7 +57,7 @@ int findSuffix(const char *suffix, const char *data) {
 			suffixCount = 0;
 		}
 	}
-	return found;
+	return 0;
 }
 
 void usage(const char *app) {
@@ -81,7 +79,7 @@ int main(int argc, char **argv) {
 	free(url);
 
 	if (!findSuffix(suffix, data)) puts("Password not pwned!");
-	
+
 	free(data);
 	free(suffix);
 }
