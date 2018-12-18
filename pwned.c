@@ -22,6 +22,11 @@ char *getSuffixUppercase(const char *hash) {
 	strncpy(hashSuffix, hash+HASH_PREFIX_SIZE, HASH_SUFFIX_SIZE);
 
 	char *suffixUpper = malloc(HASH_SUFFIX_SIZE + 1);
+	if (suffixUpper == NULL) {
+		puts("Couldn't allocate memory for suffix!");
+		return NULL;
+	}
+	
 	for (int i = 0; i < HASH_SUFFIX_SIZE; i++) {
 		int c = hashSuffix[i];
 		if (islower(c)) c = toupper(c);
@@ -64,11 +69,26 @@ int main(int argc, char **argv) {
 	}
 
 	char *hash = getHash(argv[1]);
+	if (hash == NULL) {
+		puts("Couldn't get hash!");
+		return 1;
+	}
+	
 	char *url = getURL(hash);
 	char *suffix = getSuffixUppercase(hash);
+	if (suffix == NULL) {
+		puts("Couldn't make suffix uppercase!");
+		return 1;
+	}
+	
 	free(hash);
 
 	char *data = getData(url);
+	if (data == NULL) {
+		puts("Couldn't get data from the API!");
+		return 1;
+	}
+	
 	free(url);
 
 	if (!findSuffix(suffix, data)) puts("Password not pwned!");
