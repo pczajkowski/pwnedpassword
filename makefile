@@ -1,4 +1,4 @@
-CFLAGS=-g -Wall -Wextra -O3 -std=c99
+CFLAGS=-g -Wall -Wextra -Wshadow -O3 -std=c99
 LDLIBS=-lcurl -lssl -lcrypto
 objects=curl.o sha.o
 mingwCFLAGS=-g -Wall -Wextra -O3 -std=c99
