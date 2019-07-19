@@ -29,7 +29,7 @@ char *getSuffixUppercase(const char *hash) {
 	
 	for (int i = 0; i < HASH_SUFFIX_SIZE; i++) {
 		int c = hashSuffix[i];
-		if (islower(c)) c = toupper(c);
+		c = toupper(c);
 		sprintf(suffixUpper+i, "%c", c);
 	}
 
