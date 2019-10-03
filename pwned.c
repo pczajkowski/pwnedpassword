@@ -37,7 +37,7 @@ char *getSuffixUppercase(const char *hash) {
 }
 
 void printNumber(const char *data) {
-	for (int i = 0; data[i] != '\n'; i++)
+	for (int i = 0; data[i] != '\n' && data[i] != 0; i++)
 		putchar(data[i]);
 	putchar('\n');
 }
