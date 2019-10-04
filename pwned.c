@@ -11,7 +11,7 @@
 char *getURL(const char* hash) {
 	const char *baseURL = "https://api.pwnedpasswords.com/range/";
 	char *url = calloc(URL_SIZE, 1);
-	strncpy(url, baseURL, strlen(baseURL));
+	strncpy(url, baseURL, strlen(baseURL)+1);
 	strncat(url, hash, HASH_PREFIX_SIZE);
 
 	return url;
