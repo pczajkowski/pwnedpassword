@@ -1,7 +1,7 @@
-CFLAGS=-g -Wall -Wextra -Wshadow -O3 -std=c99
+CFLAGS=-Wall -Wextra -Wshadow -O3 -std=c99
 LDLIBS=-lcurl -lssl -lcrypto
 objects=curl.o sha.o
-mingwCFLAGS=-g -Wall -Wextra -O3 -std=c99
+mingwCFLAGS=-Wall -Wextra -O3 -std=c99
 mingwLDLIBS=-lcurl -lssl -lcrypto
 mingw=x86_64-w64-mingw32-gcc
 
