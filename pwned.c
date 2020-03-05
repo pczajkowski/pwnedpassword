@@ -4,36 +4,42 @@
 
 // https://haveibeenpwned.com/API/v2#SearchingPwnedPasswordsByRange
 
-#define HASH_PREFIX_SIZE 5
-#define HASH_SUFFIX_SIZE 35
+#define HASH_PREFIX_LENGTH 5
+#define HASH_PREFIX_SIZE 6
+
+#define HASH_SUFFIX_LENGTH 35
+#define HASH_SUFFIX_SIZE 36
+
 #define URL_SIZE 43
+#define BASEURL_SIZE 38
 
 char *getURL(const char* hash) {
 	const char *baseURL = "https://api.pwnedpasswords.com/range/";
 	char *url = malloc(URL_SIZE);
 	if (url == NULL) return NULL;
 
-	strncpy(url, baseURL, strlen(baseURL)+1);
-	strncat(url, hash, HASH_PREFIX_SIZE);
+	strncpy(url, baseURL, BASEURL_SIZE);
+	strncat(url, hash, HASH_PREFIX_LENGTH);
 
 	return url;
 }
 
 char *getSuffixUppercase(const char *hash) {
-	char hashSuffix[HASH_SUFFIX_SIZE + 1];
-	strncpy(hashSuffix, hash+HASH_PREFIX_SIZE, HASH_SUFFIX_SIZE);
+	char hashSuffix[HASH_SUFFIX_SIZE];
+	strcpy(hashSuffix, hash+HASH_PREFIX_LENGTH);
 
-	char *suffixUpper = malloc(HASH_SUFFIX_SIZE + 1);
+	char *suffixUpper = malloc(HASH_SUFFIX_SIZE);
 	if (suffixUpper == NULL) {
 		puts("Couldn't allocate memory for suffix!");
 		return NULL;
 	}
 	
-	for (int i = 0; i < HASH_SUFFIX_SIZE; i++) {
+	for (int i = 0; i < HASH_SUFFIX_LENGTH; i++) {
 		int c = hashSuffix[i];
 		c = toupper(c);
 		sprintf(suffixUpper+i, "%c", c);
 	}
+	suffixUpper[HASH_SUFFIX_LENGTH] = 0;
 
 	return suffixUpper;
 }
