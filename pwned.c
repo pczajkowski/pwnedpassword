@@ -10,7 +10,9 @@
 
 char *getURL(const char* hash) {
 	const char *baseURL = "https://api.pwnedpasswords.com/range/";
-	char *url = calloc(URL_SIZE, 1);
+	char *url = malloc(URL_SIZE);
+	if (url == NULL) return NULL;
+
 	strncpy(url, baseURL, strlen(baseURL)+1);
 	strncat(url, hash, HASH_PREFIX_SIZE);
 
@@ -75,6 +77,11 @@ int main(int argc, char **argv) {
 	}
 	
 	char *url = getURL(hash);
+	if (url == NULL) {
+		puts("Couldn't get URL!");
+		return 1;
+	}
+
 	char *suffix = getSuffixUppercase(hash);
 	if (suffix == NULL) {
 		puts("Couldn't make suffix uppercase!");
