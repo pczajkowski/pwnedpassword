@@ -12,7 +12,5 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
-    - name: make clean
-      run: make clean
     - name: make
       run: make
