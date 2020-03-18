@@ -44,26 +44,35 @@ char *getSuffixUppercase(const char *hash) {
 	return suffixUpper;
 }
 
-int findSuffix(const char *suffix, const char *data) {
-	char *token, *string, *tofree;
-	tofree = string = strdup(data);
-
-	while ((token = strsep(&string, "\n")) != NULL) {
-		if (strncmp(token, suffix, HASH_SUFFIX_LENGTH) == 0) {
-			char *part = strsep(&token, ":");
-
-			if (part != NULL) {
-				printf("This is how many times your password was pwned: %s\n", token);
-				free(tofree);
-				return 1;
-			}
-
-			puts("Hash found, but can't obtain the number!");
-			break;
-		}
+int printNumber(char *text) {
+	char *state;
+	char *part = strtok_r(text, ":", &state);
+	if (part == NULL) return 0;
+	
+	part = strtok_r(NULL, ":", &state);
+	if (part != NULL) {
+		printf("This is how many times your password was pwned: %s\n", part);
+		return 1;
 	}
 
-	free(tofree);
+	return 0;
+}
+
+int findSuffix(const char *suffix, char *data) {
+	char *token = strtok(data, "\n");
+
+	while (token != NULL) {
+		if (strncmp(token, suffix, HASH_SUFFIX_LENGTH) == 0) {
+			if (!printNumber(token)) {
+				puts("Hash found, but can't obtain the number!");
+				return 0;
+			}
+
+			return 1;
+		}
+
+		token = strtok(NULL, "\n");
+	}
 
 	return 0;
 }
