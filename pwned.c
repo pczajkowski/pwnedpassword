@@ -45,16 +45,11 @@ char *getSuffixUppercase(const char *hash) {
 }
 
 int printNumber(char *text) {
-	char *part = strtok(text, ":");
+	char *part = strchr(text, ':');
 	if (part == NULL) return 0;
 	
-	part = strtok(NULL, ":");
-	if (part != NULL) {
-		printf("This is how many times your password was pwned: %s\n", part);
-		return 1;
-	}
-
-	return 0;
+	printf("This is how many times your password was pwned: %s\n", part+1);
+	return 1;
 }
 
 int findSuffix(const char *suffix, char *data) {
