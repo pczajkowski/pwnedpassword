@@ -33,7 +33,7 @@ char *getSuffixUppercase(const char *hash) {
 		puts("Couldn't allocate memory for suffix!");
 		return NULL;
 	}
-	
+
 	for (int i = 0; i < HASH_SUFFIX_LENGTH; i++) {
 		int c = hashSuffix[i];
 		c = toupper(c);
@@ -44,25 +44,27 @@ char *getSuffixUppercase(const char *hash) {
 	return suffixUpper;
 }
 
-void printNumber(const char *data) {
-	for (int i = 0; data[i] != '\n' && data[i] != 0; i++)
-		putchar(data[i]);
-	putchar('\n');
-}
-
 int findSuffix(const char *suffix, const char *data) {
-	for (int i = 0; data[i] != 0; i++) {
-		int j;
-		for (j = 0; suffix[j] != 0; j++)
-			if (data[i+j] != suffix[j])
-				break;
+	char *token, *string, *tofree;
+	tofree = string = strdup(data);
 
-		if (suffix[j] == 0 && data[i+j] == ':') {
-			printf("This is how many times your password was pwned: ");
-			printNumber(data+i+j+1);
-			return 1;
+	while ((token = strsep(&string, "\n")) != NULL) {
+		if (strncmp(token, suffix, HASH_SUFFIX_LENGTH) == 0) {
+			char *part = strsep(&token, ":");
+
+			if (part != NULL) {
+				printf("This is how many times your password was pwned: %s\n", token);
+				free(tofree);
+				return 1;
+			}
+
+			puts("Hash found, but can't obtain the number!");
+			break;
 		}
 	}
+
+	free(tofree);
+
 	return 0;
 }
 
@@ -81,7 +83,7 @@ int main(int argc, char **argv) {
 		puts("Couldn't get hash!");
 		return 1;
 	}
-	
+
 	char *url = getURL(hash);
 	if (url == NULL) {
 		puts("Couldn't get URL!");
@@ -93,7 +95,7 @@ int main(int argc, char **argv) {
 		puts("Couldn't make suffix uppercase!");
 		return 1;
 	}
-	
+
 	free(hash);
 
 	char *data = getData(url);
@@ -101,7 +103,7 @@ int main(int argc, char **argv) {
 		puts("Couldn't get data from the API!");
 		return 1;
 	}
-	
+
 	free(url);
 
 	if (!findSuffix(suffix, data)) puts("Password not pwned!");
