@@ -45,11 +45,10 @@ char *getSuffixUppercase(const char *hash) {
 }
 
 int printNumber(char *text) {
-	char *state;
-	char *part = strtok_r(text, ":", &state);
+	char *part = strtok(text, ":");
 	if (part == NULL) return 0;
 	
-	part = strtok_r(NULL, ":", &state);
+	part = strtok(NULL, ":");
 	if (part != NULL) {
 		printf("This is how many times your password was pwned: %s\n", part);
 		return 1;
