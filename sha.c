@@ -20,7 +20,7 @@ static char *hashToString(unsigned char *hash) {
 	}
 
 	for(int i = 0; i < SHA_DIGEST_LENGTH; i++)
-		sprintf(string+(i*2), "%02x", hash[i]);
+		sprintf(string+(i*2), "%02X", hash[i]);
 
 	return string;
 }
