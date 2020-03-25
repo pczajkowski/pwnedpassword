@@ -7,6 +7,3 @@ Usage is simple:
 	./pwned <password>
 
 It'll print "This is how many times your password was pwned:" and a number if your password is in ';--have i been pwned? DB, else it'll print "Password not pwned!". Enjoy!
-
-You can find Windows 64-bit binary and necessary libs in *win* subfolder.
-
