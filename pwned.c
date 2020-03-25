@@ -7,15 +7,15 @@
 #define HASH_PREFIX_LENGTH 5
 #define HASH_SUFFIX_LENGTH 35
 
-#define URL_SIZE 43
-#define BASEURL_SIZE 38
+#define BASEURL "https://api.pwnedpasswords.com/range/"
+#define BASEURL_SIZE (sizeof BASEURL)
+#define URL_SIZE (BASEURL_SIZE + HASH_PREFIX_LENGTH)
 
 char *getURL(const char* hash) {
-	const char *baseURL = "https://api.pwnedpasswords.com/range/";
 	char *url = malloc(URL_SIZE);
 	if (url == NULL) return NULL;
 
-	strncpy(url, baseURL, BASEURL_SIZE);
+	strncpy(url, BASEURL, BASEURL_SIZE);
 	strncat(url, hash, HASH_PREFIX_LENGTH);
 
 	return url;
