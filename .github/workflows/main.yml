@@ -27,3 +27,6 @@ jobs:
 
     - name: Make stuff
       run: make
+
+    - name: Test
+      run: ./pwned test
