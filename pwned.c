@@ -15,7 +15,8 @@ char *getURL(const char* hash) {
 	char *url = malloc(URL_SIZE);
 	if (url == NULL) return NULL;
 
-	strncpy(url, BASEURL, BASEURL_SIZE);
+	size_t toCopy = BASEURL_SIZE;
+	strncpy(url, BASEURL, toCopy);
 	strncat(url, hash, HASH_PREFIX_LENGTH);
 
 	return url;
