@@ -1,5 +1,5 @@
 CFLAGS=-Wall -Wextra -Wshadow -O3 -std=c99
-LDLIBS=-lcurl -lssl -lcrypto
+LDLIBS=-lcurl -lcrypto
 objects=curl.o sha.o
 
 pwned: $(objects)
