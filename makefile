@@ -1,5 +1,5 @@
 CFLAGS=-Wall -Wextra -Wshadow -O3 -std=c99
-LDLIBS=-lcurl -lcrypto
+LDLIBS=-L/usr/local/opt/openssl@1.1/lib -lcurl -lcrypto
 objects=curl.o sha.o
 
 pwned: $(objects)
