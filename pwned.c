@@ -11,6 +11,8 @@
 #define BASEURL_SIZE (sizeof BASEURL)
 #define URL_SIZE (BASEURL_SIZE + HASH_PREFIX_LENGTH)
 
+#define NUMBER_SIZE 20
+
 char *getURL(const char* hash) {
 	char *url = malloc(URL_SIZE);
 	if (url == NULL) return NULL;
@@ -20,31 +22,27 @@ char *getURL(const char* hash) {
 	return url;
 }
 
-int printNumber(char *text) {
+char *getNumber(char *text) {
 	char *part = strchr(text, ':');
-	if (part == NULL) return 0;
-	
-	printf("This is how many times your password was pwned: %s\n", part+1);
-	return 1;
+	if (part == NULL) return NULL;
+
+	char *number = malloc(NUMBER_SIZE);
+	snprintf(number, NUMBER_SIZE, "%s", part+1);
+	return number;
 }
 
-int findSuffix(const char *suffix, char *data) {
+char *findSuffix(const char *suffix, char *data) {
 	char *token = strtok(data, "\n");
 
 	while (token != NULL) {
 		if (strncmp(token, suffix, HASH_SUFFIX_LENGTH) == 0) {
-			if (!printNumber(token)) {
-				puts("Hash found, but can't obtain the number!");
-				return 0;
-			}
-
-			return 1;
+			return token;
 		}
 
 		token = strtok(NULL, "\n");
 	}
 
-	return 0;
+	return NULL;
 }
 
 void usage(const char *app) {
@@ -77,8 +75,21 @@ int main(int argc, char **argv) {
 
 	free(url);
 
-	if (!findSuffix(hash+HASH_PREFIX_LENGTH, data)) puts("Password not pwned!");
+	char *suffix = findSuffix(hash+HASH_PREFIX_LENGTH, data);
+	if (suffix == NULL) {
+		puts("Password not pwned!");
+		return 1;
+	}
+
+	char *number = getNumber(suffix);
+	if (number == NULL) {
+		puts("Hash found, but can't obtain the number!");
+		return 1;
+	}
+
+	printf("This is how many times your password was pwned: %s\n", number);
 
 	free(hash);
 	free(data);
+	free(number);
 }
